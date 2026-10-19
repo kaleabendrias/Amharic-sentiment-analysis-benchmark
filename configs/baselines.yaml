@@ -1,0 +1,36 @@
+# Experiment specification for the NEXT implementation stage; no trainer exists yet.
+seed: 42
+train_split: train
+selection_split: dev
+final_evaluation_split: test
+labels: [negative, neutral, positive]
+primary_metric: macro_f1
+secondary_metrics: [accuracy, weighted_f1, per_class_precision_recall_f1]
+preprocessing: identity  # Preserve original texts; normalization is a later ablation.
+
+majority:
+  strategy: most_frequent
+
+classifier:
+  estimator: LogisticRegression
+  solver: lbfgs
+  max_iter: 2000
+  class_weight: null
+  C_candidates: [0.5, 1.0, 2.0]  # Choose on dev only.
+
+word_tfidf:
+  analyzer: word
+  ngram_range: [1, 2]
+  token_pattern: '(?u)\b\w+\b'
+  lowercase: false
+  min_df: 2
+  max_features: 50000
+  sublinear_tf: true
+
+char_tfidf:
+  analyzer: char
+  ngram_range: [3, 5]
+  lowercase: false
+  min_df: 2
+  max_features: 100000
+  sublinear_tf: true

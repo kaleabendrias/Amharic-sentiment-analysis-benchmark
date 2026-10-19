@@ -1,0 +1,1 @@
+"""Amharic sentiment benchmark utilities."""

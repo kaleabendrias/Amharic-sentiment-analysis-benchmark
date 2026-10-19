@@ -1,0 +1,8 @@
+# Direct CPU-baseline dependencies. requirements.txt locks the tested environment.
+numpy
+pandas
+scikit-learn
+matplotlib
+joblib
+PyYAML
+requests

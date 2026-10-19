@@ -1,0 +1,85 @@
+{
+  "generated_at_utc": "2026-10-19T14:14:10.023350+00:00",
+  "source_revision": "5aec3cfcf87b59f885e98641f72e52182776429d",
+  "raw_files_modified": false,
+  "normalization_for_overlap_audit_only": "Unicode NFC and collapsed whitespace",
+  "splits": {
+    "train": {
+      "rows": 5984,
+      "labels": {
+        "negative": 1548,
+        "neutral": 3104,
+        "positive": 1332
+      },
+      "empty_texts": 0,
+      "unicode_replacement_character_rows": 0,
+      "exact_duplicate_extra_rows": 1,
+      "normalized_duplicate_extra_rows": 2,
+      "normalized_texts_with_conflicting_labels": 0,
+      "character_lengths": {
+        "min": 1,
+        "median": 71.0,
+        "p95": 120.0,
+        "max": 146
+      }
+    },
+    "dev": {
+      "rows": 1497,
+      "labels": {
+        "negative": 388,
+        "neutral": 776,
+        "positive": 333
+      },
+      "empty_texts": 0,
+      "unicode_replacement_character_rows": 0,
+      "exact_duplicate_extra_rows": 0,
+      "normalized_duplicate_extra_rows": 0,
+      "normalized_texts_with_conflicting_labels": 0,
+      "character_lengths": {
+        "min": 3,
+        "median": 68,
+        "p95": 121.0,
+        "max": 140
+      }
+    },
+    "test": {
+      "rows": 1999,
+      "labels": {
+        "negative": 1337,
+        "neutral": 224,
+        "positive": 438
+      },
+      "empty_texts": 0,
+      "unicode_replacement_character_rows": 0,
+      "exact_duplicate_extra_rows": 0,
+      "normalized_duplicate_extra_rows": 0,
+      "normalized_texts_with_conflicting_labels": 0,
+      "character_lengths": {
+        "min": 11,
+        "median": 85,
+        "p95": 117.0,
+        "max": 142
+      }
+    }
+  },
+  "cross_split_overlap": {
+    "train/dev": {
+      "exact_shared_unique_texts": 0,
+      "normalized_shared_unique_texts": 0,
+      "train_rows_affected": 0,
+      "dev_rows_affected": 0
+    },
+    "train/test": {
+      "exact_shared_unique_texts": 0,
+      "normalized_shared_unique_texts": 0,
+      "train_rows_affected": 0,
+      "test_rows_affected": 0
+    },
+    "dev/test": {
+      "exact_shared_unique_texts": 0,
+      "normalized_shared_unique_texts": 0,
+      "dev_rows_affected": 0,
+      "test_rows_affected": 0
+    }
+  }
+}

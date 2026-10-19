@@ -1,0 +1,40 @@
+{
+  "dataset": "AfriSenti",
+  "language": "Amharic",
+  "language_directory": "amh",
+  "repository": "https://github.com/afrisenti-semeval/afrisent-semeval-2023",
+  "revision": "5aec3cfcf87b59f885e98641f72e52182776429d",
+  "prepared_at_utc": "2026-10-19T14:10:16.322797+00:00",
+  "license": "CC-BY-4.0 (upstream repository README)",
+  "labels": [
+    "negative",
+    "neutral",
+    "positive"
+  ],
+  "files": [
+    {
+      "source_path": "data/amh/train.tsv",
+      "local_path": "data/raw/amh/train.tsv",
+      "sha256": "70408ef3dc742039d23347fa8d8ef553a01de4624c67153259d8f5223de84fca",
+      "bytes": 1128020
+    },
+    {
+      "source_path": "data/amh/dev.tsv",
+      "local_path": "data/raw/amh/dev.tsv",
+      "sha256": "b5b803b7591eb8b45710131f8ea263d369794ff5e681b327c5a605df01c796f8",
+      "bytes": 280350
+    },
+    {
+      "source_path": "data/amh/test.tsv",
+      "local_path": "data/raw/amh/test.tsv",
+      "sha256": "a3b2425d20af63371c20dd8c5248ffec7317454a7bad513fa58e00de81669819",
+      "bytes": 404163
+    },
+    {
+      "source_path": "README.md",
+      "local_path": "data/source/README.md",
+      "sha256": "26a5240c3fed0fe95a579764ffde01dd131df45350d0f006443a6634c0951732",
+      "bytes": 8786
+    }
+  ]
+}
