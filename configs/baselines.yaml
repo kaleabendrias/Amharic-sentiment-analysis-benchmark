@@ -7,6 +7,10 @@ labels: [negative, neutral, positive]
 primary_metric: macro_f1
 secondary_metrics: [accuracy, weighted_f1, per_class_precision_recall_f1]
 preprocessing: identity  # Preserve original texts; normalization is a later ablation.
+selection:
+  score_rounding_decimals: 6
+  tied_model_order: [majority, word_tfidf, char_tfidf]
+  tied_C_order: ascending
 
 majority:
   strategy: most_frequent

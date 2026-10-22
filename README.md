@@ -2,7 +2,7 @@
 
 Study how word and character TF-IDF classifiers compare on Amharic sentiment analysis, then investigate their errors and resource costs. The CPU baseline is the first milestone; a pretrained transformer is an optional later comparison.
 
-**Current stage:** groundwork complete. The original labeled data is downloaded, source files are pinned and checked, and all 24 environment packages are installed and verified. Model training, evaluation scores and a demo are next. See [NEXT_STEPS.md](NEXT_STEPS.md) for the implementation checklist and [plan.md](plan.md) for the full research design.
+**Current stage:** groundwork and first train/development data inspection complete. All 24 environment packages are installed and verified. The majority-class baseline is the next small task. Start with [explanation.md](explanation.md) for the beginner lesson from 21 October 2026, or [NEXT_STEPS.md](NEXT_STEPS.md) for the implementation checklist.
 
 ## Dataset
 
@@ -47,6 +47,7 @@ src/data.py                 strict UTF-8 TSV loader and integrity checks
 scripts/download_data.py    reproducible download/verification command
 scripts/audit_data.py       class balance, duplicates, overlaps and length audit
 scripts/check_environment.py dependency, tokenization and plotting checks
+scripts/inspect_data.py     small label-balanced train/dev inspection
 tests/test_data.py          corruption, malformed-input and text-preservation tests
 reports/                   aggregate data and environment reports
 data/raw/amh/               original train/dev/test TSVs; ignored by Git
@@ -59,6 +60,10 @@ Compare the training majority class, word TF-IDF + logistic regression, and char
 
 Use macro-F1 as the primary project metric, plus per-class precision/recall/F1, weighted-F1 and accuracy. Macro-F1 and weighted-F1 are different measures: use a matching protocol when comparing with published work. Freeze the selected configuration before final test evaluation.
 
-The word analyzer retains Unicode word characters, including Ethiopic text and single-character words; it excludes punctuation and emoji as standalone word features. The character analyzer can retain punctuation and emoji. Neither uses an English stopword list or stemmer. No Ethiopic character folding has been chosen. Consult the [official scikit-learn text-feature guide](https://scikit-learn.org/stable/modules/feature_extraction.html#text-feature-extraction) when implementing the pipelines.
+Protocol confirmed on 21 October 2026, before any classifiers were fitted: use the pinned dataset revision above, retain original rows and labels, and seed sampling/learned estimators with 42 where supported. Compare the majority reference and the word/character settings in `configs/baselines.yaml`, with logistic-regression `C` candidates 0.5, 1.0 and 2.0. Rank candidates by development macro-F1 rounded to six decimal places. For ties, use the fixed order majority, word TF-IDF, character TF-IDF, then smaller `C` within a model family. This rule makes selection deterministic without consulting test results. The future trainer must implement these configuration fields.
+
+The first [inspection report](reports/data_inspection.md) covers 18 train/development examples. Rerun it with `python -m scripts.inspect_data`; raw sampled messages and tokens stay in ignored `artifacts/data_inspection/samples.json`.
+
+The word analyzer retains Unicode word characters, including Ethiopic text, numbers, underscores and single-character words. Punctuation such as slashes and exclamation marks, and symbols such as emoji, are excluded from its word tokens. The character analyzer can retain punctuation and emoji. Neither uses an English stopword list or stemmer. No Ethiopic character folding has been chosen. Consult the [official scikit-learn text-feature guide](https://scikit-learn.org/stable/modules/feature_extraction.html#text-feature-extraction) when implementing the pipelines.
 
 Only aggregate structure was audited for the test split. There are no measured model results yet. For the next session, begin with the majority baseline and development-set evaluation in [NEXT_STEPS.md](NEXT_STEPS.md).

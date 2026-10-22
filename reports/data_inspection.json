@@ -1,0 +1,46 @@
+{
+  "source_revision": "5aec3cfcf87b59f885e98641f72e52182776429d",
+  "seed": 42,
+  "sample_size": 18,
+  "examples_per_class_per_split": 3,
+  "sampling": "Fixed-seed random sampling within each label in train and dev",
+  "population_split_sizes": {
+    "train": 5984,
+    "dev": 1497
+  },
+  "selected_labels_by_split": {
+    "train": {
+      "negative": 3,
+      "neutral": 3,
+      "positive": 3
+    },
+    "dev": {
+      "negative": 3,
+      "neutral": 3,
+      "positive": 3
+    }
+  },
+  "selected_rows_with": {
+    "has_ethiopic_characters": 18,
+    "has_ascii_latin_letters": 0,
+    "has_punctuation": 15,
+    "has_unicode_symbols": 2
+  },
+  "selected_rows_with_no_word_tokens": 0,
+  "word_tokenizer_config": {
+    "analyzer": "word",
+    "ngram_range": [
+      1,
+      2
+    ],
+    "token_pattern": "(?u)\\b\\w+\\b",
+    "lowercase": false,
+    "min_df": 2,
+    "max_features": 50000,
+    "sublinear_tf": true
+  },
+  "raw_sample_file": "artifacts/data_inspection/samples.json",
+  "test_split_loaded": false,
+  "model_fitted": false,
+  "interpretation": "A small label-balanced inspection sample, not a prevalence estimate or a performance result. Latin letters may be names, URLs or other text; they do not prove code-switching. Unicode symbols are not an emoji detector."
+}
