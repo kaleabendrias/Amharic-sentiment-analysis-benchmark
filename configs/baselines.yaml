@@ -1,4 +1,4 @@
-# Experiment specification for the NEXT implementation stage; no trainer exists yet.
+# Majority and word training are implemented. Character training is a future step.
 seed: 42
 train_split: train
 selection_split: dev
