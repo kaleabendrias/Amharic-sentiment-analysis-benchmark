@@ -1,4 +1,4 @@
-# Majority and word training are implemented. Character training is a future step.
+# Majority, word and character development baselines share this experiment specification.
 seed: 42
 train_split: train
 selection_split: dev

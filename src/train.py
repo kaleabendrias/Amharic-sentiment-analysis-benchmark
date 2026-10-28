@@ -1,4 +1,4 @@
-"""Fit majority or word TF-IDF baselines on train and evaluate development."""
+"""Fit majority, word or character TF-IDF on train and evaluate development."""
 
 import argparse
 import csv
@@ -22,7 +22,7 @@ from threadpoolctl import threadpool_limits
 
 from src.data import LABELS, ROOT, load_split, manifest
 from src.evaluate import evaluate_model
-from src.models import build_model, model_parameters, select_word_candidate
+from src.models import build_model, model_parameters, select_tfidf_candidate
 
 
 def save_json(path, value):
@@ -118,8 +118,8 @@ def run_model(config_path=ROOT / "configs/baselines.yaml", train_split="train",
         "model": model_name,
         "model_parameters": model_parameters(model),
         "candidate_C": C,
-        "vocabulary_size": len(model.named_steps["tfidf"].vocabulary_) if model_name == "word_tfidf" else None,
-        "classifier_iterations": model.named_steps["classifier"].n_iter_.tolist() if model_name == "word_tfidf" else None,
+        "vocabulary_size": len(model.named_steps["tfidf"].vocabulary_) if model_name != "majority" else None,
+        "classifier_iterations": model.named_steps["classifier"].n_iter_.tolist() if model_name != "majority" else None,
         "training_warnings": [{"category": warning.category.__name__, "message": str(warning.message)} for warning in caught],
         "converged": not any(issubclass(warning.category, ConvergenceWarning) for warning in caught),
         "fit_thread_limit": 1,
@@ -152,10 +152,12 @@ def run_majority(config_path=ROOT / "configs/baselines.yaml", train_split="train
     return run_model(config_path, train_split, eval_split, output_dir, model_name="majority")
 
 
-def run_word_grid(config_path=ROOT / "configs/baselines.yaml", train_split="train",
-                  eval_split="dev", output_dir=ROOT / "artifacts"):
+def run_tfidf_grid(model_name, config_path=ROOT / "configs/baselines.yaml", train_split="train",
+                   eval_split="dev", output_dir=ROOT / "artifacts"):
+    if model_name not in {"word_tfidf", "char_tfidf"}:
+        raise ValueError("The grid supports word_tfidf or char_tfidf only.")
     if train_split != "train" or eval_split != "dev":
-        raise ValueError("The word experiment fits train only and evaluates development only.")
+        raise ValueError("The TF-IDF experiment fits train only and evaluates development only.")
     config_bytes = Path(config_path).read_bytes()
     config = yaml.safe_load(config_bytes)
     if config["primary_metric"] != "macro_f1":
@@ -166,15 +168,16 @@ def run_word_grid(config_path=ROOT / "configs/baselines.yaml", train_split="trai
     if len(set(values)) != len(values):
         raise ValueError("Duplicate C candidates are not allowed.")
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
-    grid_dir = Path(output_dir) / f"word_grid_{timestamp}_{uuid4().hex[:6]}"
+    family = "word" if model_name == "word_tfidf" else "char"
+    grid_dir = Path(output_dir) / f"{family}_grid_{timestamp}_{uuid4().hex[:6]}"
     # Validate settings and split roles before creating the grid directory.
     if config["train_split"] != train_split or config["selection_split"] != eval_split:
         raise ValueError("Requested splits do not match the experiment configuration.")
-    build_model(config, "word_tfidf", values[0])
+    build_model(config, model_name, values[0])
     grid_dir.mkdir(parents=True, exist_ok=False)
     candidates = []
     for C in sorted(values):
-        run_dir, metrics = run_model(config_path, train_split, eval_split, grid_dir, "word_tfidf", C)
+        run_dir, metrics = run_model(config_path, train_split, eval_split, grid_dir, model_name, C)
         metadata = json.loads((run_dir / "metadata.json").read_text(encoding="utf-8"))
         if metadata["config_sha256"] != hashlib.sha256(config_bytes).hexdigest():
             raise ValueError("Configuration changed during the experiment; selection stopped.")
@@ -186,11 +189,11 @@ def run_word_grid(config_path=ROOT / "configs/baselines.yaml", train_split="trai
             "classifier_iterations": metadata["classifier_iterations"],
             "training_warnings": metadata["training_warnings"],
         })
-    selected = select_word_candidate(candidates, config["selection"])
+    selected = select_tfidf_candidate(candidates, config["selection"])
     summary = {
-        "model": "word_tfidf", "train_split": train_split, "evaluation_split": eval_split,
+        "model": model_name, "train_split": train_split, "evaluation_split": eval_split,
         "primary_metric": "macro_f1", "selection_policy": config["selection"],
-        "selection_scope": "Best word candidate only; character and cross-family selection are later steps.",
+        "selection_scope": f"Best {family} candidate only; cross-family selection is a separate step.",
         "config_sha256": hashlib.sha256(config_bytes).hexdigest(),
         "candidates": candidates, "selected_C": selected["C"],
         "selected_run_id": selected["run_id"], "test_split_loaded": False,
@@ -199,9 +202,19 @@ def run_word_grid(config_path=ROOT / "configs/baselines.yaml", train_split="trai
     return grid_dir, summary
 
 
+def run_word_grid(config_path=ROOT / "configs/baselines.yaml", train_split="train",
+                  eval_split="dev", output_dir=ROOT / "artifacts"):
+    return run_tfidf_grid("word_tfidf", config_path, train_split, eval_split, output_dir)
+
+
+def run_char_grid(config_path=ROOT / "configs/baselines.yaml", train_split="train",
+                  eval_split="dev", output_dir=ROOT / "artifacts"):
+    return run_tfidf_grid("char_tfidf", config_path, train_split, eval_split, output_dir)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--model", choices=["majority", "word_tfidf"], default="majority")
+    parser.add_argument("--model", choices=["majority", "word_tfidf", "char_tfidf"], default="majority")
     parser.add_argument("--config", type=Path, default=ROOT / "configs/baselines.yaml")
     parser.add_argument("--train-split", choices=["train"], default="train")
     parser.add_argument("--eval-split", choices=["dev"], default="dev")
@@ -211,7 +224,7 @@ def main():
         run_dir, metrics = run_majority(args.config, args.train_split, args.eval_split, args.output_dir)
         print(json.dumps({"run_directory": str(run_dir), "metrics": metrics}, indent=2))
     else:
-        grid_dir, selection = run_word_grid(args.config, args.train_split, args.eval_split, args.output_dir)
+        grid_dir, selection = run_tfidf_grid(args.model, args.config, args.train_split, args.eval_split, args.output_dir)
         print(json.dumps({"grid_directory": str(grid_dir), "selection": selection}, indent=2))
 
 

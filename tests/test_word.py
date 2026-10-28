@@ -13,7 +13,7 @@ from threadpoolctl import threadpool_limits
 
 from src.data import ROOT
 from src.evaluate import evaluate_model
-from src.models import build_model, select_word_candidate
+from src.models import build_model, select_tfidf_candidate
 from src.train import run_word_grid
 
 
@@ -78,9 +78,9 @@ class WordTests(unittest.TestCase):
             {"C": 0.5, "metrics": {"macro_f1": 0.5000004}},
         ]
         policy = {"score_rounding_decimals": 6, "tied_C_order": "ascending"}
-        self.assertEqual(select_word_candidate(candidates, policy)["C"], 0.5)
+        self.assertEqual(select_tfidf_candidate(candidates, policy)["C"], 0.5)
         candidates[0]["metrics"]["macro_f1"] = 0.51
-        self.assertEqual(select_word_candidate(candidates, policy)["C"], 2.0)
+        self.assertEqual(select_tfidf_candidate(candidates, policy)["C"], 2.0)
 
     def test_grid_rejects_test_evaluation_before_loading_data(self):
         with patch("src.train.load_split") as loader:

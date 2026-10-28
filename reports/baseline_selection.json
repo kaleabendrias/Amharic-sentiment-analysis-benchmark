@@ -1,0 +1,198 @@
+{
+  "evaluation_split": "dev",
+  "training_split": "train",
+  "primary_metric": "macro_f1",
+  "selection_policy": {
+    "score_rounding_decimals": 6,
+    "tied_model_order": [
+      "majority",
+      "word_tfidf",
+      "char_tfidf"
+    ],
+    "tied_C_order": "ascending"
+  },
+  "dataset_revision": "5aec3cfcf87b59f885e98641f72e52182776429d",
+  "train_sha256": "70408ef3dc742039d23347fa8d8ef553a01de4624c67153259d8f5223de84fca",
+  "dev_sha256": "b5b803b7591eb8b45710131f8ea263d369794ff5e681b327c5a605df01c796f8",
+  "family_winners": [
+    {
+      "model": "majority",
+      "C": null,
+      "run_id": "majority_20261022T064654318775Z_8d05b0",
+      "metrics": {
+        "evaluation_rows": 1497,
+        "accuracy": 0.518370073480294,
+        "macro_f1": 0.2275993547440974,
+        "weighted_f1": 0.35394208272829575,
+        "per_class": {
+          "negative": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 388
+          },
+          "neutral": {
+            "precision": 0.518370073480294,
+            "recall": 1.0,
+            "f1": 0.6827980642322922,
+            "support": 776
+          },
+          "positive": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 333
+          }
+        },
+        "confusion_matrix": {
+          "labels": [
+            "negative",
+            "neutral",
+            "positive"
+          ],
+          "rows_are": "true labels",
+          "columns_are": "predicted labels",
+          "counts": [
+            [
+              0,
+              388,
+              0
+            ],
+            [
+              0,
+              776,
+              0
+            ],
+            [
+              0,
+              333,
+              0
+            ]
+          ]
+        },
+        "zero_division": 0
+      }
+    },
+    {
+      "model": "word_tfidf",
+      "C": 2.0,
+      "run_id": "word_tfidf_20261022T120912060238Z_d76019",
+      "metrics": {
+        "evaluation_rows": 1497,
+        "accuracy": 0.5644622578490314,
+        "macro_f1": 0.4833100471344598,
+        "weighted_f1": 0.5335189554433284,
+        "per_class": {
+          "negative": {
+            "precision": 0.4519230769230769,
+            "recall": 0.2422680412371134,
+            "f1": 0.31543624161073824,
+            "support": 388
+          },
+          "neutral": {
+            "precision": 0.5772058823529411,
+            "recall": 0.8092783505154639,
+            "f1": 0.6738197424892703,
+            "support": 776
+          },
+          "positive": {
+            "precision": 0.6119402985074627,
+            "recall": 0.36936936936936937,
+            "f1": 0.4606741573033708,
+            "support": 333
+          }
+        },
+        "confusion_matrix": {
+          "labels": [
+            "negative",
+            "neutral",
+            "positive"
+          ],
+          "rows_are": "true labels",
+          "columns_are": "predicted labels",
+          "counts": [
+            [
+              94,
+              275,
+              19
+            ],
+            [
+              89,
+              628,
+              59
+            ],
+            [
+              25,
+              185,
+              123
+            ]
+          ]
+        },
+        "zero_division": 0
+      }
+    },
+    {
+      "model": "char_tfidf",
+      "C": 2.0,
+      "run_id": "char_tfidf_20261028T075729163499Z_3b98ba",
+      "metrics": {
+        "evaluation_rows": 1497,
+        "accuracy": 0.5791583166332666,
+        "macro_f1": 0.491067800851624,
+        "weighted_f1": 0.5414950360253262,
+        "per_class": {
+          "negative": {
+            "precision": 0.5176470588235295,
+            "recall": 0.2268041237113402,
+            "f1": 0.3154121863799283,
+            "support": 388
+          },
+          "neutral": {
+            "precision": 0.5721739130434783,
+            "recall": 0.8479381443298969,
+            "f1": 0.6832814122533749,
+            "support": 776
+          },
+          "positive": {
+            "precision": 0.6836158192090396,
+            "recall": 0.3633633633633634,
+            "f1": 0.4745098039215686,
+            "support": 333
+          }
+        },
+        "confusion_matrix": {
+          "labels": [
+            "negative",
+            "neutral",
+            "positive"
+          ],
+          "rows_are": "true labels",
+          "columns_are": "predicted labels",
+          "counts": [
+            [
+              88,
+              288,
+              12
+            ],
+            [
+              74,
+              658,
+              44
+            ],
+            [
+              8,
+              204,
+              121
+            ]
+          ]
+        },
+        "zero_division": 0
+      }
+    }
+  ],
+  "selected_model": "char_tfidf",
+  "selected_C": 2.0,
+  "selected_run_id": "char_tfidf_20261028T075729163499Z_3b98ba",
+  "test_split_loaded": false,
+  "selection_scope": "Development selection only; held-out test evaluation has not run."
+}

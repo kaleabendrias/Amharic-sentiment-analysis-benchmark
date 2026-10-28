@@ -1,0 +1,364 @@
+{
+  "model": "char_tfidf",
+  "reference_grid_id": "char_grid_20261028T075720208937Z_ebc8fc",
+  "train_split": "train",
+  "evaluation_split": "dev",
+  "primary_metric": "macro_f1",
+  "selection_policy": {
+    "score_rounding_decimals": 6,
+    "tied_model_order": [
+      "majority",
+      "word_tfidf",
+      "char_tfidf"
+    ],
+    "tied_C_order": "ascending"
+  },
+  "config_sha256": "c178e4d9c2775699ad9db925807f1bc02ccfa390c88835618e638b5bc7b5b366",
+  "candidates": [
+    {
+      "C": 0.5,
+      "run_id": "char_tfidf_20261028T075722600953Z_20e966",
+      "metrics": {
+        "evaluation_rows": 1497,
+        "accuracy": 0.5591182364729459,
+        "macro_f1": 0.3736108254264982,
+        "weighted_f1": 0.45917100347160333,
+        "per_class": {
+          "negative": {
+            "precision": 0.6153846153846154,
+            "recall": 0.061855670103092786,
+            "f1": 0.11241217798594848,
+            "support": 388
+          },
+          "neutral": {
+            "precision": 0.5436046511627907,
+            "recall": 0.9639175257731959,
+            "f1": 0.6951672862453532,
+            "support": 776
+          },
+          "positive": {
+            "precision": 0.7926829268292683,
+            "recall": 0.19519519519519518,
+            "f1": 0.3132530120481928,
+            "support": 333
+          }
+        },
+        "confusion_matrix": {
+          "labels": [
+            "negative",
+            "neutral",
+            "positive"
+          ],
+          "rows_are": "true labels",
+          "columns_are": "predicted labels",
+          "counts": [
+            [
+              24,
+              361,
+              3
+            ],
+            [
+              14,
+              748,
+              14
+            ],
+            [
+              1,
+              267,
+              65
+            ]
+          ]
+        },
+        "zero_division": 0
+      },
+      "fit_seconds": 2.2379539280000245,
+      "vocabulary_size": 100000,
+      "classifier_iterations": [
+        38
+      ],
+      "training_warnings": []
+    },
+    {
+      "C": 1.0,
+      "run_id": "char_tfidf_20261028T075725846230Z_b155ce",
+      "metrics": {
+        "evaluation_rows": 1497,
+        "accuracy": 0.5671342685370742,
+        "macro_f1": 0.43734196972357386,
+        "weighted_f1": 0.503008527905156,
+        "per_class": {
+          "negative": {
+            "precision": 0.51,
+            "recall": 0.13144329896907217,
+            "f1": 0.20901639344262296,
+            "support": 388
+          },
+          "neutral": {
+            "precision": 0.555027711797308,
+            "recall": 0.9033505154639175,
+            "f1": 0.687591956841589,
+            "support": 776
+          },
+          "positive": {
+            "precision": 0.7238805970149254,
+            "recall": 0.2912912912912913,
+            "f1": 0.41541755888650966,
+            "support": 333
+          }
+        },
+        "confusion_matrix": {
+          "labels": [
+            "negative",
+            "neutral",
+            "positive"
+          ],
+          "rows_are": "true labels",
+          "columns_are": "predicted labels",
+          "counts": [
+            [
+              51,
+              331,
+              6
+            ],
+            [
+              44,
+              701,
+              31
+            ],
+            [
+              5,
+              231,
+              97
+            ]
+          ]
+        },
+        "zero_division": 0
+      },
+      "fit_seconds": 2.367584567000449,
+      "vocabulary_size": 100000,
+      "classifier_iterations": [
+        53
+      ],
+      "training_warnings": []
+    },
+    {
+      "C": 2.0,
+      "run_id": "char_tfidf_20261028T075729163499Z_3b98ba",
+      "metrics": {
+        "evaluation_rows": 1497,
+        "accuracy": 0.5791583166332666,
+        "macro_f1": 0.491067800851624,
+        "weighted_f1": 0.5414950360253262,
+        "per_class": {
+          "negative": {
+            "precision": 0.5176470588235295,
+            "recall": 0.2268041237113402,
+            "f1": 0.3154121863799283,
+            "support": 388
+          },
+          "neutral": {
+            "precision": 0.5721739130434783,
+            "recall": 0.8479381443298969,
+            "f1": 0.6832814122533749,
+            "support": 776
+          },
+          "positive": {
+            "precision": 0.6836158192090396,
+            "recall": 0.3633633633633634,
+            "f1": 0.4745098039215686,
+            "support": 333
+          }
+        },
+        "confusion_matrix": {
+          "labels": [
+            "negative",
+            "neutral",
+            "positive"
+          ],
+          "rows_are": "true labels",
+          "columns_are": "predicted labels",
+          "counts": [
+            [
+              88,
+              288,
+              12
+            ],
+            [
+              74,
+              658,
+              44
+            ],
+            [
+              8,
+              204,
+              121
+            ]
+          ]
+        },
+        "zero_division": 0
+      },
+      "fit_seconds": 2.3920950810006616,
+      "vocabulary_size": 100000,
+      "classifier_iterations": [
+        53
+      ],
+      "training_warnings": []
+    }
+  ],
+  "selected_C": 2.0,
+  "selected_run_id": "char_tfidf_20261028T075729163499Z_3b98ba",
+  "selected_metadata": {
+    "run_id": "char_tfidf_20261028T075729163499Z_3b98ba",
+    "created_at_utc": "2026-10-28T07:57:29.163499+00:00",
+    "model": "char_tfidf",
+    "model_parameters": {
+      "tfidf": {
+        "estimator": "TfidfVectorizer",
+        "parameters": {
+          "analyzer": "char",
+          "binary": false,
+          "decode_error": "strict",
+          "dtype": "numpy.float64",
+          "encoding": "utf-8",
+          "input": "content",
+          "lowercase": false,
+          "max_df": 1.0,
+          "max_features": 100000,
+          "min_df": 2,
+          "ngram_range": [
+            3,
+            5
+          ],
+          "norm": "l2",
+          "preprocessor": null,
+          "smooth_idf": true,
+          "stop_words": null,
+          "strip_accents": null,
+          "sublinear_tf": true,
+          "token_pattern": "(?u)\\b\\w\\w+\\b",
+          "tokenizer": null,
+          "use_idf": true,
+          "vocabulary": null
+        }
+      },
+      "classifier": {
+        "estimator": "LogisticRegression",
+        "parameters": {
+          "C": 2.0,
+          "class_weight": null,
+          "dual": false,
+          "fit_intercept": true,
+          "intercept_scaling": 1,
+          "l1_ratio": 0.0,
+          "max_iter": 2000,
+          "n_jobs": null,
+          "penalty": "deprecated",
+          "random_state": 42,
+          "solver": "lbfgs",
+          "tol": 0.0001,
+          "verbose": 0,
+          "warm_start": false
+        }
+      }
+    },
+    "candidate_C": 2.0,
+    "vocabulary_size": 100000,
+    "classifier_iterations": [
+      53
+    ],
+    "training_warnings": [],
+    "converged": true,
+    "fit_thread_limit": 1,
+    "seed": 42,
+    "train_split": "train",
+    "evaluation_split": "dev",
+    "labels": [
+      "negative",
+      "neutral",
+      "positive"
+    ],
+    "training_label_counts": {
+      "negative": 1548,
+      "neutral": 3104,
+      "positive": 1332
+    },
+    "development_label_counts": {
+      "neutral": 776,
+      "positive": 333,
+      "negative": 388
+    },
+    "prediction_counts": {
+      "neutral": 1150,
+      "negative": 170,
+      "positive": 177
+    },
+    "fit_seconds": 2.3920950810006616,
+    "evaluation_seconds": 0.11753624399989349,
+    "timing_scope": "Fit excludes data loading; evaluation includes prediction and metrics. Neither is a latency benchmark.",
+    "dataset": {
+      "repository": "https://github.com/afrisenti-semeval/afrisent-semeval-2023",
+      "revision": "5aec3cfcf87b59f885e98641f72e52182776429d",
+      "files": {
+        "train": {
+          "source_path": "data/amh/train.tsv",
+          "local_path": "data/raw/amh/train.tsv",
+          "sha256": "70408ef3dc742039d23347fa8d8ef553a01de4624c67153259d8f5223de84fca",
+          "bytes": 1128020
+        },
+        "dev": {
+          "source_path": "data/amh/dev.tsv",
+          "local_path": "data/raw/amh/dev.tsv",
+          "sha256": "b5b803b7591eb8b45710131f8ea263d369794ff5e681b327c5a605df01c796f8",
+          "bytes": 280350
+        }
+      }
+    },
+    "config_sha256": "c178e4d9c2775699ad9db925807f1bc02ccfa390c88835618e638b5bc7b5b366",
+    "python_version": "3.12.3",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+    "packages": {
+      "PyYAML": "6.0.3",
+      "certifi": "2026.10.18",
+      "charset-normalizer": "3.5.2",
+      "cloudpickle": "3.1.2",
+      "contourpy": "1.4.0",
+      "cycler": "0.12.1",
+      "fonttools": "4.67.0",
+      "idna": "3.20",
+      "joblib": "1.6.0",
+      "kiwisolver": "1.5.1",
+      "matplotlib": "3.11.2",
+      "narwhals": "2.27.1",
+      "numpy": "2.5.3",
+      "packaging": "26.3",
+      "pandas": "3.0.5",
+      "pillow": "12.3.0",
+      "pip": "24.0",
+      "pyparsing": "3.3.3",
+      "python-dateutil": "2.9.0.post0",
+      "requests": "2.34.2",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.1",
+      "six": "1.17.0",
+      "threadpoolctl": "3.7.0",
+      "urllib3": "2.8.0"
+    },
+    "code": {
+      "git_revision": "0faec5834fcb09603ecb52c3ef67829ec7f0c35e",
+      "working_tree_dirty": true,
+      "working_tree_status": "M NEXT_STEPS.md\n M README.md\n M configs/baselines.yaml\n M plan.md\n M src/models.py\n M src/train.py\n?? explanation.md\n?? explanation2.md\n?? explanation3.md\n?? reports/data_inspection.md\n?? reports/majority_dev.md\n?? reports/word_dev.md\n?? tests/test_char.py",
+      "source_sha256": {
+        "src/__init__.py": "50d35fabe0073c01b40036a904b0594643218bd7e6d8250b45902edc1740e95d",
+        "src/data.py": "160d7ae74ca2619423fabe034095b16f71dcfcba0d90ad2d677c1748fdc70daf",
+        "src/train.py": "120aefecc5e54dd375e415b21c476c3275891c17e2a305889e01b91a619a657c",
+        "src/evaluate.py": "a6d1db97be961b3312561b1d2f64b47fce334ee50122d961ff264a4eee7d06bc",
+        "src/models.py": "6c49381de6d0328af5e2a58a9e29124b40bbf0fc98e7018a072413155efe8508",
+        "configs/dataset.json": "ddab2fc0b16799a546aa9f1ebb2c6590758da893f344fb429ebd1c9b37432e6e",
+        "requirements.txt": "fd2c874ca580f8a9dd424c1bcda1b02f35deddf054750329b4f6bda61ae7117f"
+      },
+      "snapshot_directory": "source_snapshot"
+    },
+    "test_split_loaded": false
+  },
+  "test_split_loaded": false
+}
