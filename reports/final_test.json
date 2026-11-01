@@ -1,0 +1,133 @@
+{
+  "evaluated_at_utc": "2026-11-01T06:50:10.772693+00:00",
+  "protocol": "One evaluation of the saved train-only development winner; no retraining or test-based selection.",
+  "training_split": "train",
+  "selection_split": "dev",
+  "evaluation_split": "test",
+  "dataset_revision": "5aec3cfcf87b59f885e98641f72e52182776429d",
+  "test_sha256": "a3b2425d20af63371c20dd8c5248ffec7317454a7bad513fa58e00de81669819",
+  "frozen_selection_sha256": "a7b994aa9d7fc1bf36e8d9e34bdb8fe29d7dc45ff5cd4a8a92a50f283d08e628",
+  "evaluation_code_sha256": "14560cc950663fa957f259fa3c6fe0b710576000ca3eada3c449248e6460e825",
+  "selected_run_id": "char_tfidf_20261028T075729163499Z_3b98ba",
+  "model_file_sha256": "73ce6dbc47164ea22c004c04eb36c40357147be29a3e4a86bacc6d944db901e7",
+  "preprocessing": "identity",
+  "C": 2.0,
+  "true_label_counts": {
+    "negative": 1337,
+    "neutral": 224,
+    "positive": 438
+  },
+  "prediction_counts": {
+    "negative": 341,
+    "neutral": 1449,
+    "positive": 209
+  },
+  "development_metrics": {
+    "evaluation_rows": 1497,
+    "accuracy": 0.5791583166332666,
+    "macro_f1": 0.491067800851624,
+    "weighted_f1": 0.5414950360253262,
+    "per_class": {
+      "negative": {
+        "precision": 0.5176470588235295,
+        "recall": 0.2268041237113402,
+        "f1": 0.3154121863799283,
+        "support": 388
+      },
+      "neutral": {
+        "precision": 0.5721739130434783,
+        "recall": 0.8479381443298969,
+        "f1": 0.6832814122533749,
+        "support": 776
+      },
+      "positive": {
+        "precision": 0.6836158192090396,
+        "recall": 0.3633633633633634,
+        "f1": 0.4745098039215686,
+        "support": 333
+      }
+    },
+    "confusion_matrix": {
+      "labels": [
+        "negative",
+        "neutral",
+        "positive"
+      ],
+      "rows_are": "true labels",
+      "columns_are": "predicted labels",
+      "counts": [
+        [
+          88,
+          288,
+          12
+        ],
+        [
+          74,
+          658,
+          44
+        ],
+        [
+          8,
+          204,
+          121
+        ]
+      ]
+    },
+    "zero_division": 0
+  },
+  "test_metrics": {
+    "evaluation_rows": 1999,
+    "accuracy": 0.3296648324162081,
+    "macro_f1": 0.35322801244144153,
+    "weighted_f1": 0.3727831360247459,
+    "per_class": {
+      "negative": {
+        "precision": 0.9120234604105572,
+        "recall": 0.23261032161555723,
+        "f1": 0.3706793802145411,
+        "support": 1337
+      },
+      "neutral": {
+        "precision": 0.14078674948240166,
+        "recall": 0.9107142857142857,
+        "f1": 0.2438732815301853,
+        "support": 224
+      },
+      "positive": {
+        "precision": 0.6889952153110048,
+        "recall": 0.3287671232876712,
+        "f1": 0.44513137557959814,
+        "support": 438
+      }
+    },
+    "confusion_matrix": {
+      "labels": [
+        "negative",
+        "neutral",
+        "positive"
+      ],
+      "rows_are": "true labels",
+      "columns_are": "predicted labels",
+      "counts": [
+        [
+          311,
+          970,
+          56
+        ],
+        [
+          11,
+          204,
+          9
+        ],
+        [
+          19,
+          275,
+          144
+        ]
+      ]
+    },
+    "zero_division": 0
+  },
+  "row_level_predictions": "artifacts/final_test/predictions.csv (ignored by Git)",
+  "test_informed_changes_allowed_in_original_experiment": false
+}
