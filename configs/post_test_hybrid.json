@@ -1,0 +1,31 @@
+{
+  "experiment_id": "post_test_hybrid_v1",
+  "status": "test-informed exploratory follow-up; not a new held-out test",
+  "hypothesis": "Word and character features, or a linear margin classifier, may improve sentiment separation beyond balanced character logistic regression.",
+  "original_final_test_report_sha256": "b958718486b7725e796663fa3dac57a23b93ab19b597357cb77d25768410a3e4",
+  "prior_weighting_report_sha256": "0023ec72d2895f9371fb47b5eb1d1abdd790035cb024836b3a14ba7e6797b324",
+  "baseline_config_sha256": "c178e4d9c2775699ad9db925807f1bc02ccfa390c88835618e638b5bc7b5b366",
+  "dataset_revision": "5aec3cfcf87b59f885e98641f72e52182776429d",
+  "train_sha256": "70408ef3dc742039d23347fa8d8ef553a01de4624c67153259d8f5223de84fca",
+  "dev_sha256": "b5b803b7591eb8b45710131f8ea263d369794ff5e681b327c5a605df01c796f8",
+  "preprocessing": "identity",
+  "class_weight": "balanced",
+  "candidates": [
+    {"name": "char_logreg", "features": "char", "estimator": "LogisticRegression", "C": 2.0},
+    {"name": "hybrid_logreg", "features": "word_char", "estimator": "LogisticRegression", "C": 2.0},
+    {"name": "char_svm", "features": "char", "estimator": "LinearSVC", "C": 1.0},
+    {"name": "hybrid_svm", "features": "word_char", "estimator": "LinearSVC", "C": 1.0}
+  ],
+  "cross_validation": {
+    "splitter": "StratifiedGroupKFold",
+    "n_splits": 5,
+    "shuffle": true,
+    "random_state": 42,
+    "groups": "Unicode NFC plus collapsed whitespace, for duplicate isolation"
+  },
+  "selection_metric": "mean fold macro-F1, rounded to six decimals",
+  "tie_order": ["char_logreg", "hybrid_logreg", "char_svm", "hybrid_svm"],
+  "selected_candidate_follow_up": "Refit on full training split and evaluate once on development.",
+  "held_out_test_use": "Do not load or score the original test split in this follow-up.",
+  "claim_policy": "Report cross-validation and development results as exploratory. A fresh independent test source is needed for a new unbiased final performance claim."
+}
