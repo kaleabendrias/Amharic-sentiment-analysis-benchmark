@@ -10,8 +10,12 @@ from src.data import ROOT, load_split
 from src.evaluate import evaluate_model
 from src.predict import load_model, main, predict_texts
 
+FROZEN_RUN = ROOT / json.loads((ROOT / "configs/final_selection.json").read_text(encoding="utf-8"))["selected_run_directory"]
+HAS_FROZEN_MODEL = (FROZEN_RUN / "model.joblib").is_file()
+
 
 class PredictionTests(unittest.TestCase):
+    @unittest.skipUnless(HAS_FROZEN_MODEL, "The original frozen model artifact is not included in a clean clone.")
     def test_inference_matches_evaluation_without_refitting(self):
         model, run_id, source = load_model()
         self.assertEqual(source, "frozen")
@@ -30,10 +34,10 @@ class PredictionTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "under this repository"):
                 load_model("/tmp/untrusted-run")
             loader.assert_not_called()
-        model, _, _ = load_model()
         with self.assertRaisesRegex(ValueError, "nonempty"):
-            predict_texts(model, ["  "])
+            predict_texts(object(), ["  "])
 
+    @unittest.skipUnless(HAS_FROZEN_MODEL, "The original frozen model artifact is not included in a clean clone.")
     def test_json_cli_returns_labels_without_confidence_claim(self):
         output = io.StringIO()
         with contextlib.redirect_stdout(output):

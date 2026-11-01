@@ -10,7 +10,11 @@ from unittest.mock import patch
 from src.data import ROOT
 from src.final_evaluate import run_final, validate_freeze
 
+FROZEN_RUN = ROOT / json.loads((ROOT / "configs/final_selection.json").read_text(encoding="utf-8"))["selected_run_directory"]
 
+
+@unittest.skipUnless((FROZEN_RUN / "model.joblib").is_file(),
+                     "The original frozen model artifact is not included in a clean clone.")
 class StageSixTests(unittest.TestCase):
     def test_frozen_choice_matches_selected_saved_run(self):
         freeze, selection, ablation, run_dir = validate_freeze()

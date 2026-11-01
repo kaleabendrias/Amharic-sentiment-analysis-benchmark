@@ -1,5 +1,6 @@
 """Protect the new error-review and preprocessing experiment boundaries."""
 
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -14,6 +15,8 @@ from src.error_analysis import read_predictions, selected_run
 from src.models import build_model
 from src.preprocess import WhitespaceNormalizer
 from src.train import run_model
+
+FROZEN_RUN = ROOT / json.loads((ROOT / "configs/final_selection.json").read_text(encoding="utf-8"))["selected_run_directory"]
 
 
 class StageFiveTests(unittest.TestCase):
@@ -35,6 +38,8 @@ class StageFiveTests(unittest.TestCase):
             restored = joblib.load(path)
             self.assertEqual(restored.predict(["ጥሩ    ነው", "መጥፎ\tነው"]).tolist(), before)
 
+    @unittest.skipUnless((FROZEN_RUN / "predictions.csv").is_file(),
+                         "Saved development predictions are not included in a clean clone.")
     def test_saved_predictions_reject_different_development_labels(self):
         rows = load_split("dev")
         altered = [dict(row) for row in rows]
