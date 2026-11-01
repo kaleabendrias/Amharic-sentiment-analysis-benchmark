@@ -8,10 +8,13 @@ from unittest.mock import patch
 
 from src.data import ROOT, load_split
 from src.evaluate import evaluate_model
-from src.predict import load_model, main, predict_texts
+from src.predict import load_experimental_model, load_model, main, predict_texts
 
 FROZEN_RUN = ROOT / json.loads((ROOT / "configs/final_selection.json").read_text(encoding="utf-8"))["selected_run_directory"]
 HAS_FROZEN_MODEL = (FROZEN_RUN / "model.joblib").is_file()
+EXPERIMENTAL_REPORT = ROOT / "reports/post_test_weighting.json"
+EXPERIMENTAL_RUN = ROOT / json.loads(EXPERIMENTAL_REPORT.read_text(encoding="utf-8"))["selected_run_directory"]
+HAS_EXPERIMENTAL_MODEL = (EXPERIMENTAL_RUN / "model.joblib").is_file()
 
 
 class PredictionTests(unittest.TestCase):
@@ -52,6 +55,25 @@ class PredictionTests(unittest.TestCase):
         self.assertEqual(len(payload["predictions"]), 1)
         self.assertEqual(set(payload["predictions"][0]), {"index", "label"})
         self.assertIn(payload["predictions"][0]["label"], {"negative", "neutral", "positive"})
+
+    @unittest.skipUnless(HAS_EXPERIMENTAL_MODEL, "The exploratory model artifact is not included in a clean clone.")
+    def test_experimental_model_matches_saved_development_inference(self):
+        model, run_id, source = load_experimental_model()
+        self.assertEqual(source, "post_test_exploratory")
+        self.assertEqual(run_id, EXPERIMENTAL_RUN.name)
+        self.assertEqual(model.named_steps["classifier"].class_weight, "balanced")
+        rows = load_split("dev")[:25]
+        _, evaluation_predictions = evaluate_model(model, rows)
+        self.assertEqual(predict_texts(model, [row["tweet"] for row in rows]), evaluation_predictions)
+
+    @unittest.skipUnless(HAS_EXPERIMENTAL_MODEL, "The exploratory model artifact is not included in a clean clone.")
+    def test_experimental_json_marks_test_score_unavailable(self):
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            main(["--text", "ጥሩ ነው", "--experimental-report", "--format", "json"])
+        payload = json.loads(output.getvalue())
+        self.assertEqual(payload["model_source"], "post_test_exploratory")
+        self.assertIs(payload["independent_test_score_available"], False)
 
 
 if __name__ == "__main__":
