@@ -37,6 +37,11 @@ class PredictionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "nonempty"):
             predict_texts(object(), ["  "])
 
+    def test_missing_frozen_artifact_explains_recreation(self):
+        with patch("src.predict.Path.is_file", return_value=False):
+            with self.assertRaisesRegex(FileNotFoundError, "--run-dir"):
+                load_model()
+
     @unittest.skipUnless(HAS_FROZEN_MODEL, "The original frozen model artifact is not included in a clean clone.")
     def test_json_cli_returns_labels_without_confidence_claim(self):
         output = io.StringIO()

@@ -25,6 +25,12 @@ def _check_pipeline(model, C):
 def load_model(run_dir=None):
     """Load the pinned artifact, or a locally recreated run with matching settings."""
     if run_dir is None:
+        frozen = read_json(ROOT / "configs/final_selection.json")
+        if not (ROOT / frozen["selected_run_directory"] / "model.joblib").is_file():
+            raise FileNotFoundError(
+                "The original frozen model is local and is not included in Git. "
+                "Train the character grid, then pass its selected run with --run-dir."
+            )
         freeze, _, _, path = validate_freeze()
         source = "frozen"
     else:
@@ -81,7 +87,10 @@ def main(argv=None):
     texts = sys.stdin.read().splitlines() if args.stdin else args.text
     if not texts or any(not text.strip() for text in texts):
         parser.error("Provide at least one nonblank text; blank input lines are not allowed.")
-    model, run_id, source = load_model(args.run_dir)
+    try:
+        model, run_id, source = load_model(args.run_dir)
+    except (FileNotFoundError, ValueError) as error:
+        parser.error(str(error))
     labels = predict_texts(model, texts)
     if args.format == "json":
         print(json.dumps({
