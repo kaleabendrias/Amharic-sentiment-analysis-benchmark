@@ -1,0 +1,30 @@
+{
+  "train_split": "train",
+  "evaluation_split": "dev",
+  "test_split_loaded": false,
+  "word_run_id": "word_tfidf_20261022T120912060238Z_d76019",
+  "char_run_id": "char_tfidf_20261028T075729163499Z_3b98ba",
+  "dataset_revision": "5aec3cfcf87b59f885e98641f72e52182776429d",
+  "development_sha256": "b5b803b7591eb8b45710131f8ea263d369794ff5e681b327c5a605df01c796f8",
+  "development_rows": 1497,
+  "char_error_count": 630,
+  "char_error_confusions": {
+    "negative->neutral": 288,
+    "negative->positive": 12,
+    "neutral->negative": 74,
+    "neutral->positive": 44,
+    "positive->negative": 8,
+    "positive->neutral": 204
+  },
+  "nonneutral_to_neutral_errors": 492,
+  "word_char_disagreements": 247,
+  "char_correct_word_wrong": 116,
+  "word_correct_char_wrong": 94,
+  "development_rows_with_repeated_whitespace": 372,
+  "sample_size": 40,
+  "sample_repeated_whitespace": 8,
+  "sample_latin_letters": 4,
+  "sample_question_marks": 6,
+  "sampling_note": "Stratified error and disagreement sample; not representative prevalence estimates.",
+  "local_review_file": "artifacts/error_analysis/sample40.tsv"
+}

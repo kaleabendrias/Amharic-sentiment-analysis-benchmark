@@ -44,6 +44,8 @@ def code_provenance(run_dir):
     hashes = {}
     for relative in (
         "src/__init__.py", "src/data.py", "src/train.py", "src/evaluate.py", "src/models.py",
+        "src/preprocess.py",
+        "src/ablate.py", "src/error_analysis.py",
         "configs/dataset.json", "requirements.txt",
     ):
         content = (ROOT / relative).read_bytes()

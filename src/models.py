@@ -8,6 +8,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 
+from src.preprocess import WhitespaceNormalizer
+
 
 def build_model(config, model_name, C=None):
     if model_name == "majority":
@@ -17,20 +19,29 @@ def build_model(config, model_name, C=None):
     if model_name not in {"word_tfidf", "char_tfidf"}:
         raise ValueError(f"Model not implemented: {model_name}")
     expected_analyzer = "word" if model_name == "word_tfidf" else "char"
-    if config["preprocessing"] != "identity" or config[model_name]["analyzer"] != expected_analyzer:
-        raise ValueError(f"This experiment requires unmodified text and {expected_analyzer} features.")
+    preprocessing = config["preprocessing"]
+    if preprocessing not in {"identity", "whitespace_collapse"}:
+        raise ValueError(f"Unrecognized preprocessing variant: {preprocessing}")
+    if preprocessing != "identity" and model_name != "char_tfidf":
+        raise ValueError("The one declared ablation applies to character TF-IDF only.")
+    if config[model_name]["analyzer"] != expected_analyzer:
+        raise ValueError(f"This experiment requires {expected_analyzer} features.")
     classifier = config["classifier"]
     if classifier["estimator"] != "LogisticRegression" or C not in classifier["C_candidates"]:
         raise ValueError("Use logistic regression with a predefined C candidate.")
     features = dict(config[model_name])
     features["ngram_range"] = tuple(features["ngram_range"])
-    return Pipeline([
+    steps = []
+    if preprocessing == "whitespace_collapse":
+        steps.append(("whitespace", WhitespaceNormalizer()))
+    steps.extend([
         ("tfidf", TfidfVectorizer(**features)),
         ("classifier", LogisticRegression(
             C=C, solver=classifier["solver"], max_iter=classifier["max_iter"],
             class_weight=classifier["class_weight"], random_state=config["seed"],
         )),
     ])
+    return Pipeline(steps)
 
 
 def model_parameters(model):
