@@ -1,0 +1,90 @@
+{
+  "experiment_id": "post_test_afroxlmr_mini_v1",
+  "status": "test-informed exploratory follow-up; not a new held-out test",
+  "plan_sha256": "49bcf830dc4779eab13a91f4cb66c053ebedd738725459894ae601986ccebe5f",
+  "code_sha256": "81637b7c296c4acb2173aa5b2179443aea4358e744cab3f78048108d21aae2b0",
+  "base_model": "Davlan/afro-xlmr-mini",
+  "base_model_revision": "bc04038b969667884bd83cdd37bed9559c2c3d9c",
+  "torch_version": "2.7.1+cpu",
+  "transformers_version": "4.57.1",
+  "dataset_revision": "5aec3cfcf87b59f885e98641f72e52182776429d",
+  "train_sha256": "70408ef3dc742039d23347fa8d8ef553a01de4624c67153259d8f5223de84fca",
+  "dev_sha256": "b5b803b7591eb8b45710131f8ea263d369794ff5e681b327c5a605df01c796f8",
+  "train_label_counts": {
+    "negative": 1548,
+    "neutral": 3104,
+    "positive": 1332
+  },
+  "class_weights": {
+    "negative": 1.2885444164276123,
+    "neutral": 0.6426116824150085,
+    "positive": 1.4974974393844604
+  },
+  "epoch_training_losses": [
+    1.0897795216922455,
+    0.9957167966799303,
+    0.9156476686345064
+  ],
+  "training_seconds": 1318.1015008919999,
+  "selected_run_directory": "artifacts/post_test_transformer_20261101T075901604150Z_681343",
+  "model_sha256": "c00b03de5cb97bfbd6517f06ef68c8864339eaa1b26b3d13cd79e77a8002573a",
+  "model_bytes": 470591572,
+  "development_metrics": {
+    "evaluation_rows": 1497,
+    "accuracy": 0.5450901803607214,
+    "macro_f1": 0.5139380693273878,
+    "weighted_f1": 0.5374993490409116,
+    "per_class": {
+      "negative": {
+        "precision": 0.4823529411764706,
+        "recall": 0.3170103092783505,
+        "f1": 0.38258164852255055,
+        "support": 388
+      },
+      "neutral": {
+        "precision": 0.6063694267515923,
+        "recall": 0.6134020618556701,
+        "f1": 0.6098654708520179,
+        "support": 776
+      },
+      "positive": {
+        "precision": 0.474835886214442,
+        "recall": 0.6516516516516516,
+        "f1": 0.549367088607595,
+        "support": 333
+      }
+    },
+    "confusion_matrix": {
+      "labels": [
+        "negative",
+        "neutral",
+        "positive"
+      ],
+      "rows_are": "true labels",
+      "columns_are": "predicted labels",
+      "counts": [
+        [
+          123,
+          210,
+          55
+        ],
+        [
+          115,
+          476,
+          185
+        ],
+        [
+          17,
+          99,
+          217
+        ]
+      ]
+    },
+    "zero_division": 0
+  },
+  "prior_balanced_development_macro_f1": 0.5203365127476814,
+  "development_macro_f1_delta_vs_prior": -0.006398443420293609,
+  "original_test_result_known_before_experiment": true,
+  "original_test_split_loaded_for_this_study": false,
+  "claim_policy": "Report development results as exploratory. A fresh independent test source is needed for a new unbiased final performance claim."
+}
