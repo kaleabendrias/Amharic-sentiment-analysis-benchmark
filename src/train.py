@@ -46,6 +46,7 @@ def code_provenance(run_dir):
         "src/__init__.py", "src/data.py", "src/train.py", "src/evaluate.py", "src/models.py",
         "src/preprocess.py",
         "src/ablate.py", "src/error_analysis.py",
+        "src/post_test_weighting.py",
         "configs/dataset.json", "requirements.txt",
     ):
         content = (ROOT / relative).read_bytes()
